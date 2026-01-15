@@ -7,24 +7,27 @@ sans interface graphique.
 
 import os
 import argparse
+from typing import List
 
 from sl29.games._2048 import (
     nouvelle_partie,
     jouer_coup,
 )
-def afficher_score(score:int) -> None:
+def afficher_score(score: int) -> None:
     """
     Affiche le score du jeu dans le terminal.
 
-    :param score: Le score.
+    :param score: Le score actuel du jeu.
+    :type score: int
     """
     print(f"SCORE : {score}")
 
-def afficher_plateau(plateau: list[list[int]]) -> None:
+def afficher_plateau(plateau: List[List[int]]) -> None:
     """
     Affiche le plateau de jeu dans le terminal.
 
-    :param plateau: La grille actuelle.
+    :param plateau: La grille actuelle du jeu, représentée par une liste de listes d'entiers.
+    :type plateau: List[List[int]]
     """
     print()
     for ligne in plateau:
@@ -39,9 +42,10 @@ def afficher_plateau(plateau: list[list[int]]) -> None:
 
 def demander_commande() -> str:
     """
-    Demande une commande à l'utilisateur.
+    Demande une commande à l'utilisateur via l'entrée standard.
 
-    :return: La commande saisie.
+    :return: La commande saisie par l'utilisateur (en minuscules et sans espaces).
+    :rtype: str
     """
     print("Commandes :")
     print("  g = gauche | d = droite | h = haut | b = bas | q = quitter")
@@ -49,18 +53,25 @@ def demander_commande() -> str:
 
 
 def _clear_terminal() -> None:
-    """Efface le terminal en utilisant les codes d'échappement ANSI."""
-    # \033[H : place le curseur en haut à gauche
-    # \033[2J : efface l'écran complet
+    """
+    Efface le contenu du terminal en utilisant la commande système appropriée.
+
+    Cette fonction utilise 'clear' sur les systèmes Unix-like.
+    Sur Windows, elle pourrait nécessiter une adaptation, mais ici elle est conçue pour Linux/Mac.
+    """
     os.system("clear")
 
 def jouer() -> None:
     """
-    Lance une partie de 2048 en mode texte.
+    Lance une partie interactive de 2048 en mode texte dans le terminal.
+
+    La fonction gère la boucle de jeu, affiche le plateau et le score,
+    traite les commandes utilisateur, et vérifie la fin de partie.
+    Supporte l'option --no-clear pour désactiver le nettoyage du terminal.
     """
     plateau, score = nouvelle_partie()
 
-# Le clear est maintenant activé par défaut
+    # Le clear est maintenant activé par défaut
     clear = True
     try:
         parser = argparse.ArgumentParser(add_help=False)
@@ -96,7 +107,7 @@ def jouer() -> None:
             print("Je quitte le jeu.")
             break
         else:
-            print("Entree incorrecte.")
+            print("Entrée incorrecte.")
 
 
 if __name__ == "__main__":

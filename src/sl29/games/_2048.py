@@ -5,6 +5,55 @@ from typing import List, Tuple
 
 TAILLE:int = 4
 
+
+# ==========================================================
+# 🎯 FONCTION PUBLIQUE (API POUR L’INTERFACE)
+# ==========================================================
+
+def nouvelle_partie() -> Tuple[List[List[int]], int]:
+    """
+    Crée une nouvelle partie du jeu 2048.
+
+    :return: Une grille TAILLExTAILLE initialisée avec deux tuiles, ainsi que le score à 0.
+    :rtype: Tuple[List[List[int]], int]
+    """
+    plateau = _creer_plateau_vide()
+    plateau = _ajouter_tuile(plateau)
+    plateau = _ajouter_tuile(plateau)
+    return plateau, 0
+
+def jouer_coup(plateau: List[List[int]], direction: str) -> tuple[List[List[int]], int, bool]:
+    """
+    Effectuer un mouvement sur le plateau.
+
+    :param plateau: Une grille TAILLExTAILLE du jeu.
+    :type plateau: List[List[int]]
+    :param direction: La direction du déplacement : 'g' (gauche), 'd' (droite), 'h' (haut), 'b' (bas).
+    :type direction: str
+    :return: Retourne un tuple (nouveau_plateau, points, est_fini).
+    :rtype: tuple[List[List[int]], int, bool]
+    """
+
+    # En fonction de la direction choisie on effectue les déplacement du plateau
+    if direction == "g":
+        nouveau, points_du_coup = _deplacer_gauche(plateau)
+    elif direction == "d":
+        nouveau, points_du_coup = _deplacer_droite(plateau)
+    elif direction == "h":
+        nouveau, points_du_coup = _deplacer_haut(plateau)
+    elif direction == 'b':
+        nouveau, points_du_coup = _deplacer_bas(plateau)
+    else:
+        return plateau, 0, False
+
+    if (nouveau != plateau):
+        nouveau = _ajouter_tuile(nouveau)
+
+    # Vérification si partie terminée ou non
+    fini: bool = _partie_terminee(nouveau)
+
+    return nouveau, points_du_coup, fini
+
 # ==========================================================
 # 🔒 FONCTIONS PRIVÉES (LOGIQUE INTERNE)
 # ==========================================================
@@ -13,6 +62,7 @@ def _creer_plateau_vide() -> List[List[int]]:
     """
     Crée une grille TAILLExTAILLE remplie de zéros.
     :return: Une grille vide.
+    :rtype: List[List[int]]
     """
     plateau: List[List[int]] = []
     for _ in range(TAILLE):
@@ -27,7 +77,9 @@ def _get_cases_vides(plateau: List[List[int]]) -> List[Tuple[int, int]]:
     Retourne les coordonnées des cases vides sous forme d'une liste de coordonnées
 
     :param plateau: La grille actuelle.
+    :type plateau: List[List[int]]
     :return: Une liste de coordonnées
+    :rtype: List[Tuple[int, int]]
     """
     cases_vides: List[Tuple[int, int]] = []
     for i in range(TAILLE):
@@ -41,7 +93,9 @@ def _ajouter_tuile(plateau: List[List[int]]) -> List[List[int]]:
     Ajoute une tuile de valeur 2 sur une case vide.
 
     :param plateau: La grille actuelle.
+    :type plateau: List[List[int]]
     :return: Une nouvelle grille avec une tuile ajoutée.
+    :rtype: List[List[int]]
     """
     nouveau: List[List[int]] = []
     for ligne in plateau:
@@ -57,27 +111,14 @@ def _ajouter_tuile(plateau: List[List[int]]) -> List[List[int]]:
 
     return nouveau
 
-# ==========================================================
-# 🎯 FONCTION PUBLIQUE (API POUR L’INTERFACE)
-# ==========================================================
-
-def nouvelle_partie() -> Tuple[List[List[int]], int]:
-    """
-    Crée une nouvelle partie du jeu 2048.
-
-    :return: Une grille TAILLExTAILLE initialisée avec deux tuiles, ainsi que le score à 0.
-    """
-    plateau = _creer_plateau_vide()
-    plateau = _ajouter_tuile(plateau)
-    plateau = _ajouter_tuile(plateau)
-    return plateau, 0
-
 def _supprimer_zeros(ligne: List[int]) -> List[int]:
     """
     Supprime les zéros d'une ligne.
 
     :param ligne: Une ligne de la grille.
+    :type ligne: List[int]
     :return: La ligne sans zéros.
+    :rtype: List[int]
     """
     resultat: List[int] = []
     for valeur in ligne:
@@ -90,7 +131,9 @@ def _fusionner(ligne: List[int]) -> Tuple[List[int], int]:
     Fusionne les valeurs identiques consécutives d'une ligne.
 
     :param ligne: Une ligne sans zéros.
+    :type ligne: List[int]
     :return: La ligne après fusion, les points gagnés
+    :rtype: Tuple[List[int], int]
     """
     points = 0
     fusion: List[int] = []
@@ -111,7 +154,9 @@ def _completer_zeros(ligne: List[int])-> List[int]:
     Ajoute les 0 manquants à la fin de notre ligne
 
     :param ligne: Une ligne sans zéros.
+    :type ligne: List[int]
     :return: une ligne avec les zéros ajoutés
+    :rtype: List[int]
     """
     nouvelle_ligne: List[int] = []
     # Je crée une liste remplie de 0
@@ -127,7 +172,9 @@ def _deplacer_gauche(plateau: List[List[int]]) -> Tuple[List[List[int]], int]:
     Déplace les tuiles vers la gauche en fusionnant les valeurs identiques.
 
     :param plateau: La grille actuelle du jeu.
+    :type plateau: List[List[int]]
     :return: Un tuple contenant la nouvelle grille après déplacement et les points gagnés.
+    :rtype: Tuple[List[List[int]], int]
     """
     nouveaux_points = 0
     nouveau_plateau: List[List[int]] = []
@@ -145,7 +192,9 @@ def _inverser_lignes(plateau: List[List[int]]) -> List[List[int]]:
     Inverse l'ordre des éléments de chaque ligne.
 
     :param plateau: La grille actuelle.
+    :type plateau: List[List[int]]
     :return: La grille modifiée.
+    :rtype: List[List[int]]
     """
     lignes_inversees: List[List[int]] = []
     for ligne in plateau:
@@ -163,7 +212,9 @@ def _deplacer_droite(plateau: List[List[int]]) -> Tuple[List[List[int]], int]:
     Déplace les tuiles vers la droite en fusionnant les valeurs identiques.
 
     :param plateau: La grille actuelle du jeu.
+    :type plateau: List[List[int]]
     :return: Un tuple contenant la nouvelle grille après déplacement et les points gagnés.
+    :rtype: Tuple[List[List[int]], int]
     """
     plateau_inverse = _inverser_lignes(plateau)
     plateau_deplace, nouveaux_points = _deplacer_gauche(plateau_inverse)
@@ -238,32 +289,3 @@ def _partie_terminee(plateau: List[List[int]]) -> bool:
                 return False
 
     return True
-
-# ==========================================================
-# 🎯 FONCTION PUBLIQUE (API POUR L’INTERFACE)
-# ==========================================================
-
-def jouer_coup(plateau: List[List[int]], direction: str) -> tuple[List[List[int]], int, bool]:
-    """
-    Seule fonction publique pour effectuer un mouvement.
-    Retourne (nouveau_plateau, points, est_fini).
-    """
-    # En fonction de la direction choisie on effectue les déplacement du plateau
-    if direction == "g":
-        nouveau, points_du_coup = _deplacer_gauche(plateau)
-    elif direction == "d":
-        nouveau, points_du_coup = _deplacer_droite(plateau)
-    elif direction == "h":
-        nouveau, points_du_coup = _deplacer_haut(plateau)
-    elif direction == 'b':
-        nouveau, points_du_coup = _deplacer_bas(plateau)
-    else:
-        return plateau, 0, False
-
-    if (nouveau != plateau):
-        nouveau = _ajouter_tuile(nouveau)
-
-    # Vérification si partie terminée ou non
-    fini: bool = _partie_terminee(nouveau)
-
-    return nouveau, points_du_coup, fini

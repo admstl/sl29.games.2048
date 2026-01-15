@@ -9,13 +9,48 @@ API Publique
    :undoc-members:
    :show-inheritance:
 
+Interface en Ligne de Commande (CLI)
+------------------------------------
+
+.. automodule:: sl29.games.cli_2048
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 API Privée
 ----------
 
-.. automodule:: sl29.games._2048
-   :members:
-   :private-members:
-   :exclude-members: nouvelle_partie, jouer_coup
-   :undoc-members:
-   :show-inheritance:
-   :noindex:
+Fonctions de manipulation de lignes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: sl29.games._2048._supprimer_zeros
+
+.. autofunction:: sl29.games._2048._fusionner
+
+.. autofunction:: sl29.games._2048._completer_zeros
+
+Fonctions de déplacement
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: sl29.games._2048._deplacer_gauche
+
+.. autofunction:: sl29.games._2048._deplacer_droite
+
+.. autofunction:: sl29.games._2048._deplacer_haut
+
+.. autofunction:: sl29.games._2048._deplacer_bas
+
+Fonctions utilitaires de grille
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: sl29.games._2048._creer_plateau_vide
+
+.. autofunction:: sl29.games._2048._get_cases_vides
+
+.. autofunction:: sl29.games._2048._ajouter_tuile
+
+.. autofunction:: sl29.games._2048._inverser_lignes
+
+.. autofunction:: sl29.games._2048._transposer
+
+.. autofunction:: sl29.games._2048._partie_terminee
