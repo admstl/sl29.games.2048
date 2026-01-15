@@ -48,6 +48,7 @@ doc = [
     "sphinx-autodoc-typehints",
     "sphinxcontrib-napoleon",
     "myst-parser",
+    "toml",
 ]
 
 # --- AJOUT DE LA CONFIGURATION COVERAGE ---

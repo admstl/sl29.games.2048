@@ -14,9 +14,9 @@ def _creer_plateau_vide() -> List[List[int]]:
     Crée une grille TAILLExTAILLE remplie de zéros.
     :return: Une grille vide.
     """
-    plateau = []
+    plateau: List[List[int]] = []
     for _ in range(TAILLE):
-        ligne = []
+        ligne: List[int] = []
         for _ in range(TAILLE):
             ligne.append(0)
         plateau.append(ligne)
@@ -43,9 +43,9 @@ def _ajouter_tuile(plateau: List[List[int]]) -> List[List[int]]:
     :param plateau: La grille actuelle.
     :return: Une nouvelle grille avec une tuile ajoutée.
     """
-    nouveau:List[List[int]] = []
+    nouveau: List[List[int]] = []
     for ligne in plateau:
-        nouvelle_ligne = []
+        nouvelle_ligne: List[int] = []
         for valeur in ligne:
             nouvelle_ligne.append(valeur)
         nouveau.append(nouvelle_ligne)
@@ -79,7 +79,7 @@ def _supprimer_zeros(ligne: List[int]) -> List[int]:
     :param ligne: Une ligne de la grille.
     :return: La ligne sans zéros.
     """
-    resultat = []
+    resultat: List[int] = []
     for valeur in ligne:
         if valeur != 0:
             resultat.append(valeur)
@@ -93,7 +93,7 @@ def _fusionner(ligne: List[int]) -> Tuple[List[int], int]:
     :return: La ligne après fusion, les points gagnés
     """
     points = 0
-    fusion = []
+    fusion: List[int] = []
     i = 0
     while i < len(ligne):
         # pour fusionner il faut que la case courante ne soit pas la derniere et qu'elle soit égale à la case suivante
@@ -124,9 +124,13 @@ def _completer_zeros(ligne: List[int])-> List[int]:
 
 def _deplacer_gauche(plateau: List[List[int]]) -> Tuple[List[List[int]], int]:
     """
+    Déplace les tuiles vers la gauche en fusionnant les valeurs identiques.
+
+    :param plateau: La grille actuelle du jeu.
+    :return: Un tuple contenant la nouvelle grille après déplacement et les points gagnés.
     """
     nouveaux_points = 0
-    nouveau_plateau = []
+    nouveau_plateau: List[List[int]] = []
 
     for ligne in plateau:
         ligne_sans_zeros = _supprimer_zeros(ligne)
@@ -143,9 +147,9 @@ def _inverser_lignes(plateau: List[List[int]]) -> List[List[int]]:
     :param plateau: La grille actuelle.
     :return: La grille modifiée.
     """
-    lignes_inversees:List[List[int]] = []
+    lignes_inversees: List[List[int]] = []
     for ligne in plateau:
-        nouvelle_ligne:List[int] = []
+        nouvelle_ligne: List[int] = []
         i = len(ligne) - 1
         while i >= 0:
             nouvelle_ligne.append(ligne[i])
@@ -156,16 +160,15 @@ def _inverser_lignes(plateau: List[List[int]]) -> List[List[int]]:
 
 def _deplacer_droite(plateau: List[List[int]]) -> Tuple[List[List[int]], int]:
     """
-    Déplace les tuiles vers la droite.
+    Déplace les tuiles vers la droite en fusionnant les valeurs identiques.
 
-    :param plateau: La grille actuelle.
-    :return: Une nouvelle grille après le déplacement, les points gagnés.
+    :param plateau: La grille actuelle du jeu.
+    :return: Un tuple contenant la nouvelle grille après déplacement et les points gagnés.
     """
     plateau_inverse = _inverser_lignes(plateau)
     plateau_deplace, nouveaux_points = _deplacer_gauche(plateau_inverse)
     plateau_final = _inverser_lignes(plateau_deplace)
     return plateau_final, nouveaux_points
-    #raise NotImplementedError("Fonction deplacer_droite non encore implémentée.")
 
 def _transposer(plateau: List[List[int]]) -> List[List[int]]:
     """
@@ -174,10 +177,10 @@ def _transposer(plateau: List[List[int]]) -> List[List[int]]:
     :param plateau: La grille à transposer.
     :return: La grille transposée.
     """
-    nouveau_plateau = []
+    nouveau_plateau: List[List[int]] = []
 
     for i in range(TAILLE):
-        ligne = []
+        ligne: List[int] = []
         for j in range(TAILLE):
             ligne.append(plateau[j][i])
         nouveau_plateau.append(ligne)
@@ -186,30 +189,28 @@ def _transposer(plateau: List[List[int]]) -> List[List[int]]:
 
 def _deplacer_haut(plateau: List[List[int]]) -> Tuple[List[List[int]], int]:
     """
-    Déplace les tuiles vers le haut.
+    Déplace les tuiles vers le haut en fusionnant les valeurs identiques.
 
-    :param plateau: La grille actuelle.
-    :return: Une nouvelle grille après le déplacement, les points gagnés.
+    :param plateau: La grille actuelle du jeu.
+    :return: Un tuple contenant la nouvelle grille après déplacement et les points gagnés.
     """
     plateau_transpose = _transposer(plateau)
     plateau_deplace, nouveaux_points  = _deplacer_gauche(plateau_transpose)
     plateau_final = _transposer(plateau_deplace)
     return plateau_final, nouveaux_points
-    #raise NotImplementedError("Fonction deplacer_haut non encore implémentée.")
 
 
 def _deplacer_bas(plateau: List[List[int]]) -> Tuple[List[List[int]], int]:
     """
-    Déplace les tuiles vers le bas.
+    Déplace les tuiles vers le bas en fusionnant les valeurs identiques.
 
-    :param plateau: La grille actuelle.
-    :return: Une nouvelle grille après le déplacement.
+    :param plateau: La grille actuelle du jeu.
+    :return: Un tuple contenant la nouvelle grille après déplacement et les points gagnés.
     """
     plateau_transpose = _transposer(plateau)
     plateau_deplace, nouveaux_points = _deplacer_droite(plateau_transpose)
     plateau_final = _transposer(plateau_deplace)
     return plateau_final, nouveaux_points
-    #raise NotImplementedError("Fonction deplacer_bas non encore implémentée.")
 
 def _partie_terminee(plateau: List[List[int]]) -> bool:
     """
@@ -263,6 +264,6 @@ def jouer_coup(plateau: List[List[int]], direction: str) -> tuple[List[List[int]
         nouveau = _ajouter_tuile(nouveau)
 
     # Vérification si partie terminée ou non
-    fini = _partie_terminee(nouveau)
+    fini: bool = _partie_terminee(nouveau)
 
     return nouveau, points_du_coup, fini

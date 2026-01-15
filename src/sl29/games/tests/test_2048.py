@@ -1,5 +1,6 @@
 """Tests simples pour l'API publique du module 2048 (français)."""
-from sl29.games._2048 import (
+
+from sl29.games._2048 import (  # type: ignore
     TAILLE,
     _creer_plateau_vide,
     _get_cases_vides,
@@ -369,6 +370,38 @@ def main():
     test__deplacer_bas()
     test_jouer_coup()
     test__partie_terminee()
+
+def test_jouer_coup_direction_invalide():
+    print("----> Tests de jouer_coup avec direction invalide...")
+    plateau = [[2,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    nouveau, points, fini = jouer_coup(plateau, "x")
+    assert nouveau == plateau
+    assert points == 0
+    assert fini == False
+    print("OK")
+
+def test_ajouter_tuile_plein():
+    print("----> Tests de _ajouter_tuile sur plateau plein...")
+    plateau = [[2,4,8,16],[32,64,128,256],[512,1024,2048,4096],[8192,16384,32768,65536]]
+    nouveau = _ajouter_tuile(plateau)
+    assert nouveau == plateau  # pas de changement car plein
+    print("OK")
+
+def test_partie_terminee_avec_fusions():
+    print("----> Tests de _partie_terminee avec fusions possibles...")
+    # Horizontal
+    plateau = [[2,2,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    assert _partie_terminee(plateau) == False
+    # Vertical
+    plateau = [[2,0,0,0],[2,0,0,0],[0,0,0,0],[0,0,0,0]]
+    assert _partie_terminee(plateau) == False
+    print("OK")
+
+def test_partie_terminee_plein_sans_fusions():
+    print("----> Tests de _partie_terminee plateau plein sans fusions...")
+    plateau = [[2,4,8,16],[32,64,128,256],[512,1024,2048,4096],[8192,16384,32768,65536]]
+    assert _partie_terminee(plateau) == True
+    print("OK")
 
 if __name__ == "__main__":
 	main()

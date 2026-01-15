@@ -1,25 +1,19 @@
-Welcome to sl29.games.2048's documentation!
-=========================================
+sl29.games.2048 documentation
+=============================
+
+.. include:: ../README.rst
+
 
 .. toctree::
    :maxdepth: 2
+   :caption: Contents:
 
-Introduction
-------------
+   sl29.games._2048
 
-Ce package fournit la logique du jeu 2048 (sans interface), implémentée de
-manière fonctionnelle pour un usage pédagogique.
 
-API Publique
-------------
-.. automodule:: sl29.games._2048
-   :members: nouvelle_partie, jouer_coup
-   :undoc-members:
-   :noindex:
+Indices and tables
+==================
 
-Logique Interne (Privée)
-------------------------
-.. automodule:: sl29.games._2048
-   :members:
-   :private-members:
-   :exclude-members: nouvelle_partie, jouer_coup
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

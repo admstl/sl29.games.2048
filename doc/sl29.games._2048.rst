@@ -1,0 +1,21 @@
+sl29.games._2048
+=================
+
+API Publique
+------------
+
+.. automodule:: sl29.games._2048
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+API Privée
+----------
+
+.. automodule:: sl29.games._2048
+   :members:
+   :private-members:
+   :exclude-members: nouvelle_partie, jouer_coup
+   :undoc-members:
+   :show-inheritance:
+   :noindex:
