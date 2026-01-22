@@ -60,7 +60,12 @@ def _get_cases_vides(plateau: List[List[int]]) -> List[Tuple[int, int]]:
     :return: Une liste de coordonnées
     :rtype: List[Tuple[int, int]]
     """
-    raise NotImplementedError("Fonction _get_cases_vides non implémentée.")
+    result = []
+    for j in range(len(plateau)):
+        for i in range(len(plateau[j])):
+            valeur = 
+
+
 
 def _ajouter_tuile(plateau: List[List[int]]) -> List[List[int]]:
     """
