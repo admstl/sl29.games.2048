@@ -37,7 +37,9 @@ def test__get_cases_vides():
         [2, 2, 2, 2],
         [8, 2, 4, 0],
     ]
-    assert _get_cases_vides(plateau) == [(0,0),(0,3),(1,1),(1,3),(3,3)]
+    attendu = [(0,0),(0,3),(1,1),(1,3),(3,3)]
+    resultat = _get_cases_vides(plateau)
+    assert  resultat == attendu, f"Normalement : {attendu} mais {resultat}"
     print("OK")
 
 
@@ -340,4 +342,4 @@ def test_partie_terminee_plein_sans_fusions():
     print("OK")
 
 if __name__ == "__main__":
-	main()
+    main()
