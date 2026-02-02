@@ -22,7 +22,7 @@ def nouvelle_partie() -> Tuple[List[List[int]], int]:
     grille2 = _ajouter_tuile(grille)
     grille3 = _ajouter_tuile(grille2)
     return (grille3, 0)
-    
+
 def jouer_coup(plateau: List[List[int]], direction: str) -> tuple[List[List[int]], int, bool]:
     """
     Effectuer un mouvement sur le plateau.
@@ -128,13 +128,27 @@ def _fusionner(ligne: List[int]) -> Tuple[List[int], int]:
     :return: La ligne après fusion, les points gagnés
     :rtype: Tuple[List[int], int]
     """
-    raise NotImplementedError("Fonction _fusionner non implémentée.")
+    fusion = []
+    i = 0
+    points = 0
+
+    while i < len(ligne):
+        if i + 1 < len(ligne) and ligne[i] == ligne[i + 1]:
+            points = points + ligne[i] + ligne[i + 1]
+            fusion.append(ligne[i] + ligne[i + 1])
+            i = i + 2
+        else:
+            fusion.append(ligne[i])
+            i = i + 1
+    return fusion, points
 
 def _completer_zeros(ligne): # ajouter les annotations de type
     """
     DOCSTRING À ECIRE
     """
-    raise NotImplementedError("Fonction _completer_zeros non implémentée.")
+    return ligne + [0] * (TAILLE - len(ligne))
+
+
 
 def _deplacer_gauche(plateau) : # ajouter les annotations de type
     """
